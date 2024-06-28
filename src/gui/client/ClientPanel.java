@@ -18,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import bus.common.CommonBus;
@@ -204,27 +203,22 @@ public class ClientPanel extends JPanel {
     }
 
     private void connectLabelMousePressed(MouseEvent e) {
+
         if (e.getButton() == MouseEvent.BUTTON1 && connectLabel.isEnabled()) {
             this.setEnabled(false);
             loaderLabel.setVisible(true);
+
             
+
             Thread connectThread = new Thread(() -> {
-                String nHost = "";
-                int nPort = 0;
-                String nPassword = "";
                 try {
 
-                    String host = ((JTextField) mainPanel.getComponent(1)).getText().trim();
-                    int port = Integer.parseInt(((JTextField) mainPanel.getComponent(3)).getText().trim());
+                    String host = this.mainPanel.getServerField().getText().toString();
+                    int port = Integer.parseInt(this.mainPanel.getPortField().getText().trim());
+                    char[] passwordChar = this.mainPanel.getPasswordField().getPassword();
+                    String password = new String(passwordChar);
 
-                    String password = ((JTextField) mainPanel.getComponent(5)).getText().trim();
-
-                    nHost = host;
-                    nPort = port;
-                    nPassword = password;
-
-                    if (!isValidIpv4(host))
-                        throw new Exception("Wrong format IPV4");
+                    if (!isValidIpv4(host)) throw new Exception("Wrong format IPV4");
 
                     customBus.connectToServer(host, port, password);
 
@@ -236,19 +230,12 @@ public class ClientPanel extends JPanel {
                                 new RemoteFrame(this, customBus, "png");
                             }
                         } catch (Exception exception) {
-                            JOptionPane.showMessageDialog(this,
-                                    "Can't start remoting to server:\n" + exception.getMessage());
-                            System.out.println("Host: " + host);
-                            System.out.println("Port: " + port);
-                            System.out.println("Password: " + password);
+                            JOptionPane.showMessageDialog(this, "Can't start remoting to server:\n" + exception.getMessage());
                         }
                     });
                 } catch (Exception exception) {
                     JOptionPane.showMessageDialog(this, "Can't connect to server:\n" + exception.getMessage());
-
-                    System.out.println("Host: " + nHost);
-                    System.out.println("Port: " + nPort);
-                    System.out.println("Password: " + nPassword);
+                    
                 }
                 this.setEnabled(true);
                 loaderLabel.setVisible(false);
