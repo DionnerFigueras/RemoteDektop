@@ -1,6 +1,7 @@
 package bus.rmi;
 
 import java.awt.AWTException;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.rmi.AccessException;
 import java.rmi.Naming;
@@ -20,7 +21,7 @@ public class ServerRMI {
 
     public void startBindingOnRmiServer(String host, int port)
             throws RemoteException, MalformedURLException, AWTException {
-        if (!this.is_binding) {
+        if (this.is_binding == false) {
             try {
                 this.url = "rmi://" + host + ":" + port + "/RemoteDesktop";
                 System.setProperty("java.rmi.server.hostname", host);

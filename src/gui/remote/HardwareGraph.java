@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
-public class HardwareGraph extends JPanel{
+public class HardwareGraph extends JPanel {
     public final static int SPACE = 25;
     public final static int GRAPH_WIDTH = 300;
     public final static int GRAPH_HEIGHT = 150;

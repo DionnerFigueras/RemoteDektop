@@ -17,6 +17,7 @@ private TcpServer tcpServer;
     private TcpClient tcpClient;
     private ClientRMI rmiClient;
     private MainChatPanel mainChatPanel;
+    private boolean isConnected = false;
 
     public CommonBus() {
         this.rmiServer = new ServerRMI();
@@ -66,10 +67,29 @@ private TcpServer tcpServer;
                 throw new Exception("Can't remote yourself!");
             }
         } */
+
+        if(isConnected()){
+            disconnectedFromServer();
+            throw new Exception("Already connected!");
+        }
+
         if (tcpClient.isConnected()) {
             throw new Exception("You are already remoting!");
         }
         tcpClient.connectToTcpServer(host, port, password);
         rmiClient.startConnectingToRmiServer(host, port + 1);
+    }
+
+    public boolean isConnected() {
+        return isConnected;
+    }
+
+    public void disconnectedFromServer() throws IOException{
+        if(isConnected){
+            tcpClient.disconnectFromTcpServer();
+            rmiClient.stopConnectingToRmiServer();
+
+            isConnected = false;
+        }
     }
 }

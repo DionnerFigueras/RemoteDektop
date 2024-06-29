@@ -15,8 +15,13 @@ import gui.remote.ComputerInfo;
 
 public class RemoteDesktopImplementation extends UnicastRemoteObject implements RemoteDesktopInterface{
     
-    public RemoteDesktopImplementation() throws RemoteException {
+/*     private int port;
+    private String host; */
+
+    public RemoteDesktopImplementation(/* int port, String host */) throws RemoteException {
         super();
+/*         this.port = port;
+        this.host = host; */
     }
 
     @Override
