@@ -60,7 +60,7 @@ private MainChatPanel mainChatPanel;
                 handleClientConnection(clientSocket);
             } catch (IOException e) {
                 // Log error
-            }
+            }   
         }
     }
 

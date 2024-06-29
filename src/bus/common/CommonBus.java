@@ -60,29 +60,16 @@ private TcpServer tcpServer;
     }
 
     public void connectToServer(String host, int port, String password) throws Exception {
-        if (tcpServer.isListening()) {
+/*         if (tcpServer.isListening()) {
             String serverIp = tcpServer.getServerSocket().getInetAddress().getHostAddress();
             if (host.equals(serverIp)) {
                 throw new Exception("Can't remote yourself!");
             }
-        }
+        } */
         if (tcpClient.isConnected()) {
             throw new Exception("You are already remoting!");
         }
         tcpClient.connectToTcpServer(host, port, password);
         rmiClient.startConnectingToRmiServer(host, port + 1);
     }
-
-/*     public static void main(String[] args) {
-        CommonBus commonBus = new CommonBus();
-        MainChatPanel mainChatPanel = new MainChatPanel(); // Crear un objeto MainChatPanel
-        commonBus.setMainChatPanel(mainChatPanel);
-
-        try {
-            commonBus.startServer("localhost", 8080, "mypassword");
-            System.out.println("Server started successfully!");
-        } catch (IOException | AWTException e) {
-            System.err.println("Error starting server: " + e.getMessage());
-        }
-    } */
 }
